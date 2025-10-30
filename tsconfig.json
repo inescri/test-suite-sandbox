@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ES6",                          // Output modern JavaScript
+    "module": "ESNext",                       // Use ESModules for import/export
+    "moduleResolution": "Node",              // Resolve modules like Node.js
+    "strict": true,                          // Enable all strict type-checking options
+    "esModuleInterop": true,                 // Allow default imports from CommonJS modules
+    "forceConsistentCasingInFileNames": true,// Enforce consistent file naming
+    "skipLibCheck": true                     // Skip type checking of declaration files
+  },
+  "include": ["src"],                        // Include source files
+  "exclude": ["node_modules", "dist"]        // Exclude build and dependency folders
+}
