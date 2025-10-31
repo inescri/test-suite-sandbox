@@ -15,7 +15,7 @@ describe("profile spec", () => {
     cy.get('[data-profile-tab="tokens"]>.nav-item').should("have.class", "active");
   });
 
-  it.skip("should update username", () => {
+  it("should update username", () => {
     const username = `name-user-${Math.floor(Math.random() * 1000)}`;
     // Visit profile page
     cy.visit(`${OdinConfig.pageUrl}/profile`);
