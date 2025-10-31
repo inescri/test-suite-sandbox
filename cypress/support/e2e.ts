@@ -14,4 +14,17 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import './commands'
+import "./commands";
+
+// Augment the Cypress namespace
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      /**
+       * Custom command to create a user identity and cache the session.
+       * @example cy.createIdentity('user@example.com', 'password123')
+       */
+      createIdentitySession(username: string): Chainable<void>;
+    }
+  }
+}
