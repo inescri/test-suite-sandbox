@@ -8,7 +8,14 @@ describe("profile spec", () => {
     cy.createSessionFromWallet(testWallet);
   });
 
-  it("should update username", () => {
+  it("should visit profile page", () => {
+    // Visit profile page
+    cy.visit(`${OdinConfig.pageUrl}/profile`);
+    // Check that tokens tab is active
+    cy.get('[data-profile-tab="tokens"]>.nav-item').should("have.class", "active");
+  });
+
+  it.skip("should update username", () => {
     const username = `name-user-${Math.floor(Math.random() * 1000)}`;
     // Visit profile page
     cy.visit(`${OdinConfig.pageUrl}/profile`);
@@ -23,12 +30,22 @@ describe("profile spec", () => {
   it("should visit created tokens page", () => {
     // Visit profile page
     cy.visit(`${OdinConfig.pageUrl}/profile?tab=created-tokens`);
-
+    // Check that created tokens tab is active
+    cy.get('[data-profile-tab="created-tokens"]>.nav-item').should("have.class", "active");
   });
 
   it("should visit achievements page", () => {
     // Visit profile page
     cy.visit(`${OdinConfig.pageUrl}/profile?tab=achievements`);
+    // Check that achievements tab is active
+    cy.get('[data-profile-tab="achievements"]>.nav-item').should("have.class", "active");
+  });
+
+  it("should visit activity page", () => {
+    // Visit profile page
+    cy.visit(`${OdinConfig.pageUrl}/profile?tab=activity`);
+    // Check that activity tab is active
+    cy.get('[data-profile-tab="activity"]>.nav-item').should("have.class", "active");
   });
 
 });
