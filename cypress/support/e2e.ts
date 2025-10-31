@@ -14,6 +14,7 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
+import { createIdentity } from "../../auth-utils";
 import { SampleWallet } from "../../auth-utils/sampe-wallet";
 import "./commands";
 
@@ -29,3 +30,39 @@ declare global {
     }
   }
 }
+
+
+Cypress.Commands.add("createSessionFromWallet", (wallet: SampleWallet) => {
+  cy.session(
+    wallet.address,
+    () => {
+      cy.then(() => createIdentity(wallet)).then(
+        ({ identity, wallet, sessionIdentity }) => {
+          window.localStorage.setItem(
+            "siwbIdentity",
+            JSON.stringify({
+              address: wallet.address,
+              sessionIdentity: sessionIdentity.toJSON(),
+              delegationChain: identity.getDelegation().toJSON(),
+              providerKey: "xverse",
+            })
+          );
+          window.localStorage.setItem("connection_provider", "siwb");
+          window.localStorage.setItem("siwb_login_method", "external-app");
+        }
+      );
+    },
+    {
+      validate() {
+        //Check that the token is still in local storage
+        cy.window().its("localStorage.siwbIdentity").should("be.a", "string");
+        cy.window()
+          .its("localStorage.siwb_login_method")
+          .should("be.a", "string");
+        cy.window()
+          .its("localStorage.connection_provider")
+          .should("be.a", "string");
+      },
+    }
+  );
+});
