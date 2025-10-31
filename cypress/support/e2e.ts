@@ -22,9 +22,9 @@ declare global {
     interface Chainable {
       /**
        * Custom command to create a user identity and cache the session.
-       * @example cy.createIdentity('user@example.com', 'password123')
+       * @example cy.createIdentity('"seat civil cargo question coral long crop flavor travel win symptom start"')
        */
-      createIdentitySession(username: string): Chainable<void>;
+      createIdentitySession(mnemonic: string): Chainable<void>;
     }
   }
 }

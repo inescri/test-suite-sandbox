@@ -1,17 +1,12 @@
 import { prepare } from "./core/prepare";
 import { login } from "./core/login";
-import { createSampleWallet } from "./sampe-wallet";
-import { authenticateCallback } from "./core/auth-callback";
+import { createSampleWallet, generateSampleMnemonic } from "./sampe-wallet";
 
-export const createIdentity = async () => {
-
-
-  const wallet = await createSampleWallet();
+export const createIdentity = async (mnemonic?: string) => {
+  const wallet = await createSampleWallet(mnemonic);
   const result = await prepare(wallet.address);
-
   const signature = await wallet.signMessage(result.message);
-
-  const { identity, sessionIdentity} = await login({
+  const { identity, sessionIdentity } = await login({
     address: wallet.address,
     message: result.message,
     signature: signature,
@@ -19,12 +14,9 @@ export const createIdentity = async () => {
     signatureType: "Bip322Simple",
   });
 
-  const token = await authenticateCallback(identity);
-
   return {
     identity,
     wallet,
     sessionIdentity,
-    token
   };
 };

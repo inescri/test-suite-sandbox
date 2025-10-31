@@ -1,9 +1,8 @@
-import { DelegationChain } from "@dfinity/identity";
-import { createIdentity } from "../../auth-utils";
+import { createIdentity } from "../auth-utils";
 
 Cypress.Commands.add("createIdentitySession", (username: string) => {
   cy.session(
-    `user-${username}`,
+    username,
     () => {
       cy.then(() => createIdentity()).then(
         ({ identity, wallet, sessionIdentity }) => {
@@ -33,14 +32,28 @@ Cypress.Commands.add("createIdentitySession", (username: string) => {
         cy.window()
           .its("localStorage.siwb_login_method")
           .should("be.a", "string");
+        cy.window()
+          .its("localStorage.connection_provider")
+          .should("be.a", "string");
       },
     }
   );
 });
 
 describe("template spec", () => {
+  beforeEach(() => {
+    cy.viewport("macbook-13");
+    cy.createIdentitySession(
+      "seat civil cargo question coral long crop flavor travel win symptom start"
+    );
+  });
   it("visits the app", () => {
-    cy.createIdentitySession("user-test");
+    cy.visit("http://localhost:5173");
+  });
+  it("visits the profile page", () => {
     cy.visit("http://localhost:5173/profile");
+    cy.get('[data-testid="edit-username-button"]').click();
+    cy.get('input[name="username"]').clear().type("Cypress User");
+
   });
 });
