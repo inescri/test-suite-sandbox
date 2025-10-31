@@ -1,7 +1,7 @@
 import { OdinConfig } from "./config";
 import { testWallet } from "./test-wallet";
 
-describe("profile spec", () => {
+describe("header spec", () => {
   beforeEach(() => {
     cy.createSessionFromWallet(testWallet);
   });
