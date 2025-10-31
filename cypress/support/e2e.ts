@@ -23,9 +23,9 @@ declare global {
     interface Chainable {
       /**
        * Custom command to create a user identity and cache the session.
-       * @example cy.createIdentitySession(wallet)
+       * @example cy.createSessionFromWallet(wallet)
        */
-      createIdentitySession(wallet: SampleWallet): Chainable<void>;
+      createSessionFromWallet(wallet: SampleWallet): Chainable<void>;
     }
   }
 }

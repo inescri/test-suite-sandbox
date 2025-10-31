@@ -28,17 +28,12 @@ const walletObject: SampleWallet = {
   },
 };
 
-Cypress.Commands.add("createIdentitySession", (wallet: SampleWallet) => {
+Cypress.Commands.add("createSessionFromWallet", (wallet: SampleWallet) => {
   cy.session(
     wallet.address,
     () => {
       cy.then(() => createIdentity(wallet)).then(
         ({ identity, wallet, sessionIdentity }) => {
-          cy.log(
-            `Created identity for user: ${wallet.address}:${identity
-              .getPrincipal()
-              .toText()}`
-          );
           window.localStorage.setItem(
             "siwbIdentity",
             JSON.stringify({
@@ -71,14 +66,17 @@ Cypress.Commands.add("createIdentitySession", (wallet: SampleWallet) => {
 describe("template spec", () => {
   beforeEach(() => {
     cy.viewport("macbook-13");
-    cy.createIdentitySession(walletObject);
+    cy.createSessionFromWallet(walletObject);
   });
   it("should update username", () => {
     const username = `name-user-${Math.floor(Math.random() * 1000)}`;
+    // Visit profile page
     cy.visit("http://localhost:5173/profile");
+    // toggle edit username
     cy.get('[data-testid="edit-username-button"]').click();
+    // update username input and submit
     cy.get('input[name="username"]').clear().type(`${username}{enter}`);
-    console.log(cy.get('[data-testid="username-display"]').children);
+    // check that username is updated
     cy.get('[data-testid="username-display"]').should("contain.text", username);
   });
 });
