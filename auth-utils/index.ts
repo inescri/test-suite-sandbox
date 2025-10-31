@@ -1,9 +1,11 @@
 import { prepare } from "./core/prepare";
 import { login } from "./core/login";
-import { createSampleWallet, generateSampleMnemonic } from "./sampe-wallet";
+import { createSampleWallet, generateSampleMnemonic, SampleWallet } from "./sampe-wallet";
 
-export const createIdentity = async (mnemonic?: string) => {
-  const wallet = await createSampleWallet(mnemonic);
+export const createIdentity = async (wallet?: SampleWallet) => {
+  if (!wallet) {
+    wallet = await createSampleWallet();
+  }
   const result = await prepare(wallet.address);
   const signature = await wallet.signMessage(result.message);
   const { identity, sessionIdentity } = await login({

@@ -14,6 +14,7 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
+import { SampleWallet } from "../../auth-utils/sampe-wallet";
 import "./commands";
 
 // Augment the Cypress namespace
@@ -22,9 +23,9 @@ declare global {
     interface Chainable {
       /**
        * Custom command to create a user identity and cache the session.
-       * @example cy.createIdentity('"seat civil cargo question coral long crop flavor travel win symptom start"')
+       * @example cy.createIdentitySession(wallet)
        */
-      createIdentitySession(mnemonic: string): Chainable<void>;
+      createIdentitySession(wallet: SampleWallet): Chainable<void>;
     }
   }
 }

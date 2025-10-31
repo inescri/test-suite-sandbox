@@ -38,7 +38,7 @@ function encodeVarString(b: Uint8Array) {
 /**
  * Sign a message using BIP322 format (adapted from odin/utils/bip322.ts)
  */
-async function signBip322MessageWithKey({
+export async function signBip322MessageWithKey({
   message,
   privateKeyHex,
 }: {
